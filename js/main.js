@@ -30,11 +30,10 @@ function generateNumberBetweenFixed (min, max, digits) {
     max = min;
     min = swap;
   }
-}
-if (min < 0) {
-  // значит, часть диапазона или весь диапазон отрицательный. Max не проверяем, он точно больше или равен min
-  return 'sorry, can\'t do that';
-}
+  if (min < 0) {
+    // значит, часть диапазона или весь диапазон отрицательный. Max не проверяем, он точно больше или равен min
+    return 'sorry, can\'t do that';
+  }
   return (Math.random() * (max - min) + min).toFixed(digits);
 }
 
