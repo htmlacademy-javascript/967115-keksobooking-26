@@ -11,10 +11,19 @@ function generateIntegerNumberBetween(min, max) {
     max = min;
     min = swap;
   }
+  if (max < 0) {
+    // значит, весь диапазон отрицательный
+    return 'sorry, can\'t do that';
+  } else if (min < 0) {
+    // значит, левая граница меньше нуля, правая — больше или равна 0. С этим можно работать
+    min = 0; //
+  }
+
+  // дальше работаем с «неотрицательным диапазоном»
   return Math.round(Math.random() * (max - min) + min);
 }
 
-generateIntegerNumberBetween(10, 20);
+generateIntegerNumberBetween(-20, 10);
 
 // Генерирует число с плавающей точкой в диапазоне от min до max
 // Число знаков после запятой передаётся как параметр
@@ -23,6 +32,13 @@ function generateNumberBetweenFixed (min, max, digits) {
     const swap = max;
     max = min;
     min = swap;
+  }
+  if (max < 0) {
+    // значит, весь диапазон отрицательный
+    return 'sorry, can\'t do that';
+  } else if (min < 0) {
+    // значит, левая граница меньше нуля, правая — больше или равна 0. С этим можно работать
+    min = 0; //
   }
   return (Math.random() * (max - min) + min).toFixed(digits);
 }
