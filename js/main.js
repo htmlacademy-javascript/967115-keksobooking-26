@@ -1,45 +1,109 @@
-// Генерирует случайное целое число между min и max.
-// Если минимальное значение больше максимального, их нужно поменять местами.
-// Это позволит включить в диапазон нижнюю границу и исключить верхнюю.
-// При равных значениях min и max, сгенерированное число будет равно им. Специально не обрабатывается
-// Описание Math.random() — https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-// Описание Math.round() – https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/round
-// Число округляется по правилам математики
-function generateIntegerNumberBetween(min, max) {
-  if (min > max) {
-    const swap = max;
-    max = min;
-    min = swap;
-  }
-  if (min < 0) {
-    // значит, часть диапазона или весь диапазон отрицательный. Max не проверяем, он точно больше или равен min
-    return 'sorry, can\'t do that';
-  }
+const NUMBER_OF_ADVERTISEMENTS = 10;
+const AVATARS = createAvatars(NUMBER_OF_ADVERTISEMENTS);
+const HOUSING_TYPE = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel'
+];
+const BOOKING_TIME = [
+  '12:00',
+  '13:00',
+  '14:00'
+];
+const HOUSING_FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+];
 
-  // дальше работаем с «неотрицательным диапазоном»
-  return Math.round(Math.random() * (max - min) + min);
+
+// Взяты функции Кекса по генерации случайного положительного целого числа
+// и числа с плавающей точкой из диапазона
+// Механику изучил, приемы взял на вооружение
+// Первоисточник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
+function getRandomPositiveInteger (a, b) {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+}
+function getRandomPositiveFloat (a, b, digits = 1) {
+  const lower = Math.min(Math.abs(a), Math.abs(b));
+  const upper = Math.max(Math.abs(a), Math.abs(b));
+  const result = Math.random() * (upper - lower) + lower;
+  return +result.toFixed(digits);
 }
 
-generateIntegerNumberBetween(20, 0);
-
-// Генерирует число с плавающей точкой в диапазоне от min до max
-// Число знаков после запятой передаётся как параметр
-function generateNumberBetweenFixed (min, max, digits) {
-  if (min > max) {
-    const swap = max;
-    max = min;
-    min = swap;
-  }
-  if (min < 0) {
-    // значит, часть диапазона или весь диапазон отрицательный. Max не проверяем, он точно больше или равен min
-    return 'sorry, can\'t do that';
-  }
-  return (Math.random() * (max - min) + min).toFixed(digits);
+function getRandomArrayElement (elements) {
+  return elements[getRandomPositiveInteger(0, elements.length - 1)];
 }
 
-generateNumberBetweenFixed(1.1, 1.2, 4);
+function getRandomSubArray (arr) {
+  const shuffled = arr.slice();
+  let swap, index, i = arr.length;
+  while (i--) {
+    index = Math.floor(Math.random() * (i + 1));
+    swap = shuffled[index];
+    shuffled[index] = shuffled[i];
+    shuffled[i] = swap;
+  }
+  return shuffled.slice(0, getRandomPositiveInteger(0, shuffled.length));
+}
 
-// Обдумать решение в лоб:
-// При обрезании сгенерированного числа «в лоб» оно округляется в большую сторону.
-// Чтобы округлить в меньшую, можно умножить число на 10 в степени digits (Math.pow),
-// округлить число вниз (Math.floor) и поделить на 10 в степени digits
+function createAvatars (numberOfAvatars) {
+  function createAvatar (index) {
+    const zeroIndex = String(index).padStart(2, 0);
+    const avatar = `img/avatars/user${zeroIndex}.png`;
+    return avatar;
+  }
+  const avatars = [];
+  for (let i = 0; i < numberOfAvatars; i++) {
+    avatars.push(createAvatar(i + 1));
+  }
+  return avatars;
+}
+
+function getUniqueAvatar () {
+  const index = getRandomPositiveInteger(0, AVATARS.length - 1);
+  const avatar = AVATARS[index];
+  AVATARS.splice(index, 1);
+  return avatar;
+}
+
+function createAdvertisement () {
+  return {
+    author: {
+      avatar: getUniqueAvatar(),
+    },
+    offer: {
+      title: 'Компактная квартира для семьи из трёх человек',
+      get address() {return `${this.location.lat}, ${this.location.lng}`;}, // придумать, как переопределить через location
+      price: getRandomPositiveInteger(0, 1000000), // 0 - акционная цена
+      type: getRandomArrayElement(HOUSING_TYPE),
+      rooms: getRandomPositiveInteger(1, 20), // вряд ли больше
+      guests: getRandomPositiveInteger(1, 200), // вряд ли больше
+      checkin: getRandomArrayElement(BOOKING_TIME),
+      checkout: getRandomArrayElement(BOOKING_TIME),
+      features: getRandomSubArray(HOUSING_FEATURES),
+      description: 'Вы будете жить на холме в окрушении леса и таких же интровертов как и вы',
+      photos: getRandomSubArray(PHOTOS)
+    },
+    location: {
+      lat: getRandomPositiveFloat(35.65000, 35.70000, 5),
+      lng: getRandomPositiveFloat(139.70000, 139.80000, 5)
+    },
+  };
+}
+
+const severalAdvericements = Array.from({length: NUMBER_OF_ADVERTISEMENTS}, createAdvertisement);
+
