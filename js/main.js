@@ -91,20 +91,20 @@ function getUniqueAvatar () {
 }
 
 function createAdvertisement () {
-  const LAT = getRandomPositiveFloat(MIN_LAT, MAX_LAT, FLOAT_COORDINATES);
-  const LNG = getRandomPositiveFloat(MIN_NLG, MAX_NLG, FLOAT_COORDINATES);
-  const ADDRESS = `${LAT}, ${LNG}`;
+  const lat = getRandomPositiveFloat(MIN_LAT, MAX_LAT, FLOAT_COORDINATES);
+  const lng = getRandomPositiveFloat(MIN_NLG, MAX_NLG, FLOAT_COORDINATES);
+  const address = `${lat}, ${lng}`;
   return {
     author: {
       avatar: getUniqueAvatar(),
     },
     location: {
-      lat: LAT,
-      lng: LNG
+      lat: lat,
+      lng: lng
     },
     offer: {
       title: 'Компактная квартира для семьи из трёх человек',
-      address: ADDRESS,
+      address: address,
       price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE), // 0 - акционная цена
       type: getRandomArrayElement(HOUSING_TYPE),
       rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS), // вряд ли больше
