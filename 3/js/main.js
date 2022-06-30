@@ -1,4 +1,15 @@
 const NUMBER_OF_ADVERTISEMENTS = 10;
+const MIN_ROOMS = 1;
+const MAX_ROOMS = 20; // вряд ли больше
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 200; // вряд ли больше
+const MIN_PRICE = 0; // акционная цена
+const MAX_PRICE = 1000000;
+const FLOAT_COORDINATES = 5;
+const MIN_LAT = 35.65000;
+const MAX_LAT = 35.70000;
+const MIN_NLG = 139.70000;
+const MAX_NLG = 139.80000;
 const AVATARS = createAvatars(NUMBER_OF_ADVERTISEMENTS);
 const HOUSING_TYPE = [
   'palace',
@@ -63,8 +74,7 @@ function getRandomSubArray (arr) {
 function createAvatars (numberOfAvatars) {
   function createAvatar (index) {
     const zeroIndex = String(index).padStart(2, 0);
-    const avatar = `img/avatars/user${zeroIndex}.png`;
-    return avatar;
+    return `img/avatars/user${zeroIndex}.png`;
   }
   const avatars = [];
   for (let i = 0; i < numberOfAvatars; i++) {
@@ -81,29 +91,31 @@ function getUniqueAvatar () {
 }
 
 function createAdvertisement () {
+  const LAT = getRandomPositiveFloat(MIN_LAT, MAX_LAT, FLOAT_COORDINATES);
+  const LNG = getRandomPositiveFloat(MIN_NLG, MAX_NLG, FLOAT_COORDINATES);
+  const ADDRESS = `${LAT}, ${LNG}`;
   return {
     author: {
       avatar: getUniqueAvatar(),
     },
+    location: {
+      lat: LAT,
+      lng: LNG
+    },
     offer: {
       title: 'Компактная квартира для семьи из трёх человек',
-      get address() {return `${this.location.lat}, ${this.location.lng}`;}, // придумать, как переопределить через location
-      price: getRandomPositiveInteger(0, 1000000), // 0 - акционная цена
+      address: ADDRESS,
+      price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE), // 0 - акционная цена
       type: getRandomArrayElement(HOUSING_TYPE),
-      rooms: getRandomPositiveInteger(1, 20), // вряд ли больше
-      guests: getRandomPositiveInteger(1, 200), // вряд ли больше
+      rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS), // вряд ли больше
+      guests: getRandomPositiveInteger(MIN_GUESTS, MAX_GUESTS),
       checkin: getRandomArrayElement(BOOKING_TIME),
       checkout: getRandomArrayElement(BOOKING_TIME),
       features: getRandomSubArray(HOUSING_FEATURES),
       description: 'Вы будете жить на холме в окрушении леса и таких же интровертов как и вы',
       photos: getRandomSubArray(PHOTOS)
-    },
-    location: {
-      lat: getRandomPositiveFloat(35.65000, 35.70000, 5),
-      lng: getRandomPositiveFloat(139.70000, 139.80000, 5)
-    },
+    }
   };
 }
 
 const severalAdvericements = Array.from({length: NUMBER_OF_ADVERTISEMENTS}, createAdvertisement);
-
