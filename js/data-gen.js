@@ -91,6 +91,6 @@ function createAdvertisement () {
   };
 }
 
-const severalAdvericements = () => Array.from({length: NUMBER_OF_ADVERTISEMENTS}, createAdvertisement);
+const createAdvericements = () => Array.from({length: NUMBER_OF_ADVERTISEMENTS}, createAdvertisement);
 
-export {severalAdvericements};
+export {createAdvericements};

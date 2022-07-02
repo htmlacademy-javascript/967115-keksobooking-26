@@ -1,1 +1,3 @@
-import {severalAdvericements} from './data-gen.js';
+import {createAdvericements} from './data-gen.js';
+
+const advertisements = createAdvericements();
