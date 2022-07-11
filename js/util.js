@@ -27,10 +27,10 @@ function getRandomSubArray (arr) {
   return shuffled.slice(0, getRandomPositiveInteger(0, shuffled.length));
 }
 
-function subList (listTemplate, list) {
+function getSubList (listTemplate, list) {
   listTemplate.forEach((listTemplateItem) => {
     const isNecessary = list.some((listItem) =>
-      listTemplateItem.classList.contains(`popup__feature--${  listItem}`));
+      listTemplateItem.classList.contains(`popup__feature--${listItem}`));
 
     if(!isNecessary) {
       listTemplateItem.remove();
@@ -43,5 +43,5 @@ export {
   getRandomPositiveFloat,
   getRandomArrayElement,
   getRandomSubArray,
-  subList
+  getSubList
 };

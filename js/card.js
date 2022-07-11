@@ -1,4 +1,4 @@
-import { subList } from './util.js';
+import {getSubList} from './util.js';
 
 const HOUSING_TYPE = {
   'flat': 'Квартира',
@@ -17,12 +17,12 @@ function emptynessCheck (data, field) {
   }
 }
 
-function photosList (pPhotos, photos, template) {
-  pPhotos.innerHTML = '';
+function photosList (photosContainer, photos, photoTemplate) {
+  photosContainer.innerHTML = '';
   photos.forEach((photo) => {
-    const photoItem = template.cloneNode(true);
+    const photoItem = photoTemplate.cloneNode(true);
     photoItem.src = photo;
-    pPhotos.appendChild(photoItem);
+    photosContainer.appendChild(photoItem);
   });
 }
 
@@ -36,21 +36,21 @@ function generateCard (cardData) { // Это данные для одной ка
   popupAddress.textContent = cardData.offer.address;
 
   const popupPrice = card.querySelector('.popup__text--price');
-  popupPrice.textContent = `${cardData.offer.price  } ₽/ночь`;
+  popupPrice.textContent = `${cardData.offer.price} ₽/ночь`;
 
   const popupType = card.querySelector('.popup__type');
   popupType.textContent = HOUSING_TYPE[cardData.offer.type];
 
   const popupCapacity = card.querySelector('.popup__text--capacity');
-  popupCapacity.textContent = `${cardData.offer.rooms  } комнат для ${  cardData.offer.guests  } гостей `;
+  popupCapacity.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей `;
 
   const popupTime = card.querySelector('.popup__text--time');
-  popupTime.textContent = `Заезд после ${  cardData.offer.checkin  }, выезд до ${  cardData.offer.checkin}`;
+  popupTime.textContent = `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkin}`;
 
   const featuresContainer = card.querySelector('.popup__features');
   const popupFeatures = featuresContainer.querySelectorAll('.popup__feature');
   const featuresData = cardData.offer.features;
-  subList(popupFeatures, featuresData);
+  getSubList(popupFeatures, featuresData);
 
   const popupDescription = card.querySelector('.popup__description');
   popupDescription.textContent = cardData.offer.description;

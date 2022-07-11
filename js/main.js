@@ -1,4 +1,4 @@
-import {generateCard} from './adv-gen.js';
+import {generateCard} from './card.js';
 import {createAdvertisements} from './data-gen.js';
 
 const similarAdvertisementsData = createAdvertisements();
