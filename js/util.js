@@ -29,13 +29,13 @@ function getRandomSubArray (arr) {
 
 function subList (listTemplate, list) {
   listTemplate.forEach((listTemplateItem) => {
-  const isNecessary = list.some((listItem) =>
-    listTemplateItem.classList.contains(`popup__feature--${  listItem}`));
+    const isNecessary = list.some((listItem) =>
+      listTemplateItem.classList.contains(`popup__feature--${  listItem}`));
 
-  if(!isNecessary) {
-    listTemplateItem.remove();
-  }
-});
+    if(!isNecessary) {
+      listTemplateItem.remove();
+    }
+  });
 }
 
 export {

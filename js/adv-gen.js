@@ -1,4 +1,3 @@
-import { createAdvertisements } from './data-gen.js';
 import { subList } from './util.js';
 
 const HOUSING_TYPE = {
