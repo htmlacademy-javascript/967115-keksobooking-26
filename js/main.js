@@ -1,3 +1,7 @@
-import {createAdvericements} from './data-gen.js';
+import {generateCard} from './card.js';
+import {createAdvertisements} from './data-gen.js';
 
-const advertisements = createAdvericements();
+const similarAdvertisementsData = createAdvertisements();
+
+const mapCanvas = document.querySelector('#map-canvas');
+mapCanvas.appendChild(generateCard(similarAdvertisementsData[0]));
