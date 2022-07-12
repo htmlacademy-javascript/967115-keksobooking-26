@@ -7,15 +7,15 @@ const filtersFormFeatures = filtersForm.querySelector('fieldset'); //
 // Блин, классное схлапывание. В копилку
 
 function toggleActiveMode (isActive) {
-    advertisementForm.classList.toggle('ad-form--disabled', isActive);
-    advertisementFields.forEach((advertisementField) => {
-        advertisementField.disabled = isActive;
-    });
-    filtersForm.classList.toggle('ad-form--disabled', isActive);
-    filtersFormSelects.forEach((filtersFormSelect) => {
-        filtersFormSelect.disabled = isActive;
-    });
-    filtersFormFeatures.disabled = isActive;
+  advertisementForm.classList.toggle('ad-form--disabled', isActive);
+  advertisementFields.forEach((advertisementField) => {
+    advertisementField.disabled = isActive;
+  });
+  filtersForm.classList.toggle('ad-form--disabled', isActive);
+  filtersFormSelects.forEach((filtersFormSelect) => {
+    filtersFormSelect.disabled = isActive;
+  });
+  filtersFormFeatures.disabled = isActive;
 }
 
-export {toggleActiveMode}
+export {toggleActiveMode};
