@@ -8,3 +8,4 @@ const mapCanvas = document.querySelector('#map-canvas');
 mapCanvas.appendChild(generateCard(similarAdvertisementsData[0]));
 
 turnActiveModeOn();
+turnActiveModeOff();
