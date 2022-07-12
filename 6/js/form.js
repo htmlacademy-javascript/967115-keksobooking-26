@@ -4,28 +4,18 @@ const filtersForm = document.querySelector('.map__filters');
 const filtersFormSelects = filtersForm.querySelectorAll('select'); // Может лучше через childNode собрать потомков первого уровня?
 const filtersFormFeatures = filtersForm.querySelector('fieldset'); //
 
-function turnActiveModeOn () {
-  advertisementForm.classList.remove('ad-form--disabled');
+// Блин, классное схлапывание. В копилку
+
+function toggleActiveMode (isActive) {
+  advertisementForm.classList.toggle('ad-form--disabled', isActive);
   advertisementFields.forEach((advertisementField) => {
-    advertisementField.disabled = false;
+    advertisementField.disabled = isActive;
   });
-  filtersForm.classList.remove('ad-form--disabled');
+  filtersForm.classList.toggle('ad-form--disabled', isActive);
   filtersFormSelects.forEach((filtersFormSelect) => {
-    filtersFormSelect.disabled = false;
+    filtersFormSelect.disabled = isActive;
   });
-  filtersFormFeatures.disabled = false;
+  filtersFormFeatures.disabled = isActive;
 }
 
-function turnActiveModeOff () {
-  advertisementForm.classList.add('ad-form--disabled');
-  advertisementFields.forEach((advertisementField) => {
-    advertisementField.disabled = true;
-  });
-  filtersForm.classList.add('ad-form--disabled');
-  filtersFormSelects.forEach((filtersFormSelect) => {
-    filtersFormSelect.disabled = true;
-  });
-  filtersFormFeatures.disabled = true;
-}
-
-export {turnActiveModeOff, turnActiveModeOn};
+export {toggleActiveMode};
