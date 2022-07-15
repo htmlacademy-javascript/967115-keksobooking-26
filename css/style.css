@@ -264,6 +264,13 @@ fieldset {
 
   width: 100%;
 }
+.add-form-guests {
+  width: 50%;
+  display: inline;
+}
+.pristine-error {
+  color: red;
+}
 
 .ad-form--disabled {
   opacity: 0.3;
