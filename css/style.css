@@ -264,6 +264,24 @@ fieldset {
 
   width: 100%;
 }
+.add-form-guests,
+.add-form-price,
+.add-form-title  {
+  position: relative;
+  width: 50%;
+  display: inline;
+}
+.pristine-error {
+  color: red;
+  height: 0;
+  position: absolute;
+  font-size: 14px;
+}
+
+.add-form-guests .pristine-error {
+  position: absolute;
+  bottom: 25px;
+}
 
 .ad-form--disabled {
   opacity: 0.3;
