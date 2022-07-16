@@ -31,9 +31,9 @@ function guestsValidation () {
   return guestsOptions[roomsNumber.value].includes(capacity.value);
 }
 function getGuestsErrorMessage () {
-  return (roomsNumber.value === '100' || capacity.value === '0') ? 
-  'Большие помещения не созданы для гостей. И наоборот...' :
-  'Добавьте комнат или уменьшите количество гостей';
+  return (roomsNumber.value === '100' || capacity.value === '0') ?
+    'Большие помещения не созданы для гостей. И наоборот...' :
+    'Добавьте комнат или уменьшите количество гостей';
 }
 
 function formValidate () {
@@ -50,8 +50,9 @@ function formValidate () {
   pristine.addValidator(capacity, guestsValidation, getGuestsErrorMessage);
 
   advertisementForm.addEventListener('submit', (evt) => {
-    const isValid = pristine.validate();
-    if (!isValid) {evt.preventDefault();}
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
   });
 }
 
