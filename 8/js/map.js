@@ -44,7 +44,7 @@ const mainPinIcon = L.icon(
   {
     iconUrl: MAIN_ICON_URL,
     iconSize: [MAIN_ICON_SIZE_X, MAIN_ICON_SIZE_Y],
-    iconAnchor: [MAIN_ICON_SIZE_X / 2, MAIN_ICON_SIZE_Y] // Или лучше через промежуточные let за пределами инициализации сделать?
+    iconAnchor: [MAIN_ICON_SIZE_X / 2, MAIN_ICON_SIZE_Y]
   }
 );
 
@@ -88,15 +88,15 @@ function createPin (advData) {
 const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
 mainPin.addTo(advGroup);
 
-function setAddress (lat, lng) {
+function setAddress (point) {
+  const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
+  const lng = point.getLatLng().lng.toFixed(FLOAT_COORDINATES);
   address.value = `${lat}, ${lng}`;
 }
-setAddress(mainPin.getLatLng().lat.toFixed(FLOAT_COORDINATES),
-  mainPin.getLatLng().lng.toFixed(FLOAT_COORDINATES));
+setAddress(mainPin);
 
 mainPin.on('moveend', () => {
-  const {lat, lng} = mainPin.getLatLng();
-  setAddress(lat.toFixed(FLOAT_COORDINATES), lng.toFixed(FLOAT_COORDINATES));
+  setAddress(mainPin);
 });
 
 export {createPin};
