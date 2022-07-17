@@ -2,6 +2,21 @@ import {toggleActiveMode} from './form.js';
 import {generateCard} from './card.js';
 
 const FLOAT_COORDINATES = 5;
+const INITIAL_MAP_COORDINATES = {
+  lat: 35.67500,
+  lng: 139.75000
+};
+const INITIAL_PIN_COORDINATES = {
+  lat: 35.67500,
+  lng: 139.75000
+};
+const INITIAL_MAP_SCALE = 13;
+const MAIN_ICON_SIZE = [52, 52];
+const MAIN_ICON_ANCHOR = [26, 52];
+const MAIN_ICON_URL = '../img/main-pin.svg';
+const ORDINARY_ICON_SIZE = [40, 40];
+const ORDINARY_ICON_ANCHOR = [20, 40];
+const ORDINARI_ICON_URL = '../img/pin.svg';
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -9,9 +24,9 @@ const map = L.map('map-canvas')
   })
   .setView(
     {
-      lat: 35.67500,
-      lng: 139.75000
-    }, 13
+      lat: INITIAL_MAP_COORDINATES.lat,
+      lng: INITIAL_MAP_COORDINATES.lng
+    }, INITIAL_MAP_SCALE
   );
 
 L.tileLayer(
@@ -25,22 +40,22 @@ const advGroup = L.layerGroup().addTo(map);
 
 const mainPinIcon = L.icon(
   {
-    iconUrl: '../img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52]
+    iconUrl: MAIN_ICON_URL,
+    iconSize: MAIN_ICON_SIZE,
+    iconAnchor: MAIN_ICON_ANCHOR
   }
 );
 
 const mainPinCoordinates = {
-  lat: 35.67500,
-  lng: 139.75000
+  lat: INITIAL_PIN_COORDINATES.lat,
+  lng: INITIAL_PIN_COORDINATES.lng
 };
 
 const ordinaryPinIcon = L.icon(
   {
-    iconUrl: '../img/pin.svg',
-    iconSize: [40,40],
-    iconAnchor: [20, 40]
+    iconUrl: ORDINARI_ICON_URL,
+    iconSize: ORDINARY_ICON_SIZE,
+    iconAnchor: ORDINARY_ICON_ANCHOR
   }
 );
 
