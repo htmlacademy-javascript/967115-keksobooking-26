@@ -13,13 +13,9 @@ const InitialPinCoordinates = {
 const INITIAL_MAP_SCALE = 13;
 const MAIN_ICON_SIZE_X = 52;
 const MAIN_ICON_SIZE_Y = 52;
-const MAIN_ICON_ANCHOR_Y = 52;
-const MAIN_ICON_ANCHOR_X = MAIN_ICON_ANCHOR_Y / 2;
 const MAIN_ICON_URL = '../img/main-pin.svg';
 const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
-const ORDINARY_ICON_ANCHOR_Y = 40;
-const ORDINARY_ICON_ANCHOR_X = ORDINARY_ICON_ANCHOR_Y / 2;
 const ORDINARI_ICON_URL = '../img/pin.svg';
 
 const address = document.querySelector('#address');
@@ -48,7 +44,7 @@ const mainPinIcon = L.icon(
   {
     iconUrl: MAIN_ICON_URL,
     iconSize: [MAIN_ICON_SIZE_X, MAIN_ICON_SIZE_Y],
-    iconAnchor: [MAIN_ICON_ANCHOR_X, MAIN_ICON_ANCHOR_Y]
+    iconAnchor: [MAIN_ICON_SIZE_X / 2, MAIN_ICON_SIZE_Y] // Или лучше через промежуточные let за пределами инициализации сделать?
   }
 );
 
@@ -61,7 +57,7 @@ const ordinaryPinIcon = L.icon(
   {
     iconUrl: ORDINARI_ICON_URL,
     iconSize: [ORDINARY_ICON_SIZE_X, ORDINARY_ICON_SIZE_Y],
-    iconAnchor: [ORDINARY_ICON_ANCHOR_X, ORDINARY_ICON_ANCHOR_Y]
+    iconAnchor: [ORDINARY_ICON_SIZE_X / 2, ORDINARY_ICON_SIZE_Y]
   }
 );
 
@@ -91,13 +87,16 @@ function createPin (advData) {
 
 const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
 mainPin.addTo(advGroup);
-address.value = `
-${mainPin.getLatLng().lat.toFixed(FLOAT_COORDINATES)}, 
-${mainPin.getLatLng().lng.toFixed(FLOAT_COORDINATES)}`;
+
+function setAddress (lat, lng) {
+  address.value = `${lat}, ${lng}`;
+}
+setAddress(mainPin.getLatLng().lat.toFixed(FLOAT_COORDINATES),
+  mainPin.getLatLng().lng.toFixed(FLOAT_COORDINATES));
 
 mainPin.on('moveend', () => {
   const {lat, lng} = mainPin.getLatLng();
-  address.value = `${lat.toFixed(FLOAT_COORDINATES)}, ${lng.toFixed(FLOAT_COORDINATES)}`;
+  setAddress(lat.toFixed(FLOAT_COORDINATES), lng.toFixed(FLOAT_COORDINATES));
 });
 
 export {createPin};
