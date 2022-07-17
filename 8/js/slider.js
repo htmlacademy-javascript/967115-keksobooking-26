@@ -30,6 +30,6 @@ sliderElement.noUiSlider.on('update', (value) => {
   price.value = value;
 });
 
-price.addEventListener('change', () => {
+price.addEventListener('input', () => {
   sliderElement.noUiSlider.set(price.value);
 });
