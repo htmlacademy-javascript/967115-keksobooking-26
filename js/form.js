@@ -1,3 +1,6 @@
+import {showAlert} from './alert.js';
+import {sendAdverisement} from './data.js';
+
 const advertisementForm = document.querySelector('.ad-form');
 const advertisementFields = advertisementForm.querySelectorAll('fieldset');
 const filtersForm = document.querySelector('.map__filters');
@@ -50,9 +53,17 @@ function formValidate () {
   pristine.addValidator(capacity, guestsValidation, getGuestsErrorMessage);
 
   advertisementForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
+    evt.preventDefault();
+    if (pristine.validate()) {
+      const formData = new FormData(advertisementForm);
+      sendAdverisement(
+        showAlert,
+        showAlert,
+        formData,
+        advertisementForm
+      );
     }
+
   });
 }
 

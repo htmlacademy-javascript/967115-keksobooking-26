@@ -1053,3 +1053,10 @@ fieldset {
 .hidden {
   display: none;
 }
+/* Custom */
+.form-error-container {
+  position: relative;
+}
+.form-error-message {
+  position: absolute;
+}

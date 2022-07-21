@@ -24,6 +24,7 @@ function photosList (photosContainer, photos, photoTemplate) {
     photoItem.src = photo;
     photosContainer.appendChild(photoItem);
   });
+  if (!photos) {photosContainer.classList.add('visually-hidden');}
 }
 
 function generateCard (cardData) { // Это данные для одной карточки
@@ -33,13 +34,15 @@ function generateCard (cardData) { // Это данные для одной ка
   emptynessCheck(cardData.offer.title, popupTitle);
 
   const popupAddress = card.querySelector('.popup__text--address');
-  popupAddress.textContent = cardData.offer.address;
+  emptynessCheck(cardData.offer.address, popupAddress);
 
   const popupPrice = card.querySelector('.popup__text--price');
-  popupPrice.textContent = `${cardData.offer.price} ₽/ночь`;
+  emptynessCheck(cardData.offer.price, popupPrice);
+  popupPrice.textContent += ' ₽/ночь';
 
   const popupType = card.querySelector('.popup__type');
-  popupType.textContent = HOUSING_TYPE[cardData.offer.type];
+  emptynessCheck(HOUSING_TYPE[cardData.offer.type], popupType);
+  // popupType.textContent = HOUSING_TYPE[cardData.offer.type];
 
   const popupCapacity = card.querySelector('.popup__text--capacity');
   popupCapacity.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей `;
@@ -50,14 +53,25 @@ function generateCard (cardData) { // Это данные для одной ка
   const featuresContainer = card.querySelector('.popup__features');
   const popupFeatures = featuresContainer.querySelectorAll('.popup__feature');
   const featuresData = cardData.offer.features;
-  getSubList(popupFeatures, featuresData);
+  if (featuresData) {
+    getSubList(popupFeatures, featuresData);
+  } else {
+    featuresContainer.classList.add('visually-hidden');
+  }
+
 
   const popupDescription = card.querySelector('.popup__description');
   popupDescription.textContent = cardData.offer.description;
 
+
   const popupPhotos = card.querySelector('.popup__photos');
   const photoTemplate = cardTemplate.querySelector('.popup__photo');
-  photosList(popupPhotos, cardData.offer.photos, photoTemplate);
+  if (!Object.prototype.hasOwnProperty.call(cardData.offer, 'photos')){
+    popupPhotos.classList.add('visually-hidden');
+  } else {
+    photosList(popupPhotos, cardData.offer.photos, photoTemplate);
+  }
+  //!cardData.offer.hasOwnProperty('photos')
 
   const popupAvatar = card.querySelector('.popup__avatar');
   popupAvatar.src = cardData.author.avatar;
