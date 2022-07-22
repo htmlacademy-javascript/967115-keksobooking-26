@@ -17,24 +17,24 @@ const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
 const ORDINARI_ICON_URL = '../img/pin.svg';
 
-const address = document.querySelector('#address');
+const addressElement = document.querySelector('#address');
 
-const advertisementForm = document.querySelector('.ad-form');
-const advertisementFields = advertisementForm.querySelectorAll('fieldset');
-const filtersForm = document.querySelector('.map__filters');
-const filtersFormSelects = filtersForm.querySelectorAll('select');
-const filtersFormFeatures = filtersForm.querySelector('fieldset');
+const adFormElement = document.querySelector('.ad-form');
+const adFieldElements = adFormElement.querySelectorAll('fieldset');
+const filtersFormElement = document.querySelector('.map__filters');
+const filtersFormSelectsElements = filtersFormElement.querySelectorAll('select');
+const filtersFormFeaturesElement = filtersFormElement.querySelector('fieldset');
 
 function toggleActiveMode (isActive) {
-  advertisementForm.classList.toggle('ad-form--disabled', isActive);
-  advertisementFields.forEach((advertisementField) => {
+  adFormElement.classList.toggle('ad-form--disabled', isActive);
+  adFieldElements.forEach((advertisementField) => {
     advertisementField.disabled = isActive;
   });
-  filtersForm.classList.toggle('ad-form--disabled', isActive);
-  filtersFormSelects.forEach((filtersFormSelect) => {
+  filtersFormElement.classList.toggle('ad-form--disabled', isActive);
+  filtersFormSelectsElements.forEach((filtersFormSelect) => {
     filtersFormSelect.disabled = isActive;
   });
-  filtersFormFeatures.disabled = isActive;
+  filtersFormFeaturesElement.disabled = isActive;
 }
 
 const map = L.map('map-canvas')
@@ -109,7 +109,7 @@ mainPin.addTo(advGroup);
 function setAddress (point) {
   const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
   const lng = point.getLatLng().lng.toFixed(FLOAT_COORDINATES);
-  address.value = `${lat}, ${lng}`;
+  addressElement.value = `${lat}, ${lng}`;
 }
 setAddress(mainPin);
 

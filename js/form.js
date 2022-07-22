@@ -2,9 +2,9 @@ import {showAlert} from './alert.js';
 import {sendAdvertisement} from './data.js';
 import {resetForms} from './reset.js';
 
-const advertisementForm = document.querySelector('.ad-form');
-const roomsNumber = advertisementForm.querySelector('#room_number');
-const capacity = advertisementForm.querySelector('#capacity');
+const adFormElement = document.querySelector('.ad-form');
+const roomsNumberElement = adFormElement.querySelector('#room_number');
+const capacityElement = adFormElement.querySelector('#capacity');
 
 const guestsOptions = {
   '1': ['1'],
@@ -14,16 +14,21 @@ const guestsOptions = {
 };
 
 function guestsValidation () {
-  return guestsOptions[roomsNumber.value].includes(capacity.value);
+  return guestsOptions[roomsNumberElement.value].includes(capacityElement.value);
 }
 function getGuestsErrorMessage () {
-  return (roomsNumber.value === '100' || capacity.value === '0') ?
+  return (roomsNumberElement.value === '100' || capacityElement.value === '0') ?
     'Большие помещения не созданы для гостей. И наоборот...' :
     'Добавьте комнат или уменьшите количество гостей';
 }
 
+function showAlertResetForm (message) {
+  showAlert(message);
+  resetForms();
+}
+
 function formValidate () {
-  const pristine = new Pristine(advertisementForm, {
+  const pristine = new Pristine(adFormElement, {
     classTo: 'form__item',
     errorClass: 'form__item--invalid',
     successClass: 'form__item--valid',
@@ -32,15 +37,16 @@ function formValidate () {
     errorTextClass: 'form__error'
   });
 
-  pristine.addValidator(roomsNumber, guestsValidation, getGuestsErrorMessage);
-  pristine.addValidator(capacity, guestsValidation, getGuestsErrorMessage);
+  pristine.addValidator(roomsNumberElement, guestsValidation, getGuestsErrorMessage);
+  pristine.addValidator(capacityElement, guestsValidation, getGuestsErrorMessage);
 
-  advertisementForm.addEventListener('submit', (evt) => {
+  adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      const formData = new FormData(advertisementForm);
+      const formData = new FormData(adFormElement);
       sendAdvertisement(
-        showAlert,
+        // showAlert,
+        showAlertResetForm,
         showAlert,
         formData
       );
@@ -49,10 +55,9 @@ function formValidate () {
   });
 }
 
+const resetButtonElement = document.querySelector('.ad-form__reset');
 
-const resetButton = document.querySelector('.ad-form__reset');
-
-resetButton.addEventListener('click', (evt) => {
+resetButtonElement.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForms();
 });

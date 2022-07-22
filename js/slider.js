@@ -5,8 +5,8 @@ const INITIAL_SLIDER_STEP = 1;
 const FLOAT_PRICE = 0;
 
 const sliderElement = document.querySelector('.ad-form__slider');
-const price = document.querySelector('#price');
-price.value = INITIAL_SLIDER_START_VALUE;
+const priceElement = document.querySelector('#price');
+priceElement.value = INITIAL_SLIDER_START_VALUE;
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -27,11 +27,11 @@ noUiSlider.create(sliderElement, {
 });
 
 sliderElement.noUiSlider.on('update', (value) => {
-  price.value = value;
+  priceElement.value = value;
 });
 
-price.addEventListener('input', () => {
-  sliderElement.noUiSlider.set(price.value);
+priceElement.addEventListener('input', () => {
+  sliderElement.noUiSlider.set(priceElement.value);
 });
 
 function resetSlider () {

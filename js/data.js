@@ -1,5 +1,3 @@
-import { resetForms } from './reset.js';
-
 const getAdvertisements = (onSuccess, onFail) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
@@ -20,7 +18,6 @@ const sendAdvertisement = (onSuccess, onFail, data) => {
     .then((response) => {
       if (response.ok) {
         onSuccess('Данные успешно отправлены');
-        resetForms();
       } else {
         onFail('Что-то пошло не так, попробуйте позже');
       }
