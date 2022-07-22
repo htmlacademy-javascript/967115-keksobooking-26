@@ -1,3 +1,5 @@
+import { resetForms } from './reset.js';
+
 const getAdvertisements = (onSuccess, onFail) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
@@ -7,21 +9,25 @@ const getAdvertisements = (onSuccess, onFail) => {
     .catch(() => onFail('Мы не смогли загрузить данные для карты с сервера, попробуйте позже'));
 };
 
-const sendAdverisement = (onSuccess, onFail, body, form) => {
+const sendAdvertisement = (onSuccess, onFail, data) => {
   fetch(
-    'https://26.javascript.pages.academy2/keksobooking',
+    'https://26.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
-      body
+      body: data,
     }
   )
-    .then(() => {
-      onSuccess('Данные успешно отправлены');
-      form.reset(); //Как будто неудачное место обнулить форму -- если не передать форму, не получится передать данные
+    .then((response) => {
+      if (response.ok) {
+        onSuccess('Данные успешно отправлены');
+        resetForms();
+      } else {
+        onFail('Что-то пошло не так, попробуйте позже');
+      }
     })
     .catch(() => {
       onFail('Что-то пошло не так, попробуйте позже');
     });
 };
 
-export {getAdvertisements, sendAdverisement};
+export {getAdvertisements, sendAdvertisement};

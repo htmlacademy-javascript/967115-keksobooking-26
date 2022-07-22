@@ -33,3 +33,9 @@ sliderElement.noUiSlider.on('update', (value) => {
 price.addEventListener('input', () => {
   sliderElement.noUiSlider.set(price.value);
 });
+
+function resetSlider () {
+  sliderElement.noUiSlider.set(INITIAL_SLIDER_START_VALUE);
+}
+
+export {resetSlider};

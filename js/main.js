@@ -7,4 +7,4 @@ import { showAlert } from './alert.js';
 
 formValidate();
 
-getAdvertisements((data)=> data.forEach((dat) => createPin(dat)), showAlert);
+getAdvertisements((data)=> data.forEach((item) => createPin(item)), showAlert);

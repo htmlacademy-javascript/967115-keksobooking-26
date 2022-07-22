@@ -1,4 +1,3 @@
-import {toggleActiveMode} from './form.js';
 import {generateCard} from './card.js';
 
 const FLOAT_COORDINATES = 5;
@@ -19,6 +18,24 @@ const ORDINARY_ICON_SIZE_Y = 40;
 const ORDINARI_ICON_URL = '../img/pin.svg';
 
 const address = document.querySelector('#address');
+
+const advertisementForm = document.querySelector('.ad-form');
+const advertisementFields = advertisementForm.querySelectorAll('fieldset');
+const filtersForm = document.querySelector('.map__filters');
+const filtersFormSelects = filtersForm.querySelectorAll('select');
+const filtersFormFeatures = filtersForm.querySelector('fieldset');
+
+function toggleActiveMode (isActive) {
+  advertisementForm.classList.toggle('ad-form--disabled', isActive);
+  advertisementFields.forEach((advertisementField) => {
+    advertisementField.disabled = isActive;
+  });
+  filtersForm.classList.toggle('ad-form--disabled', isActive);
+  filtersFormSelects.forEach((filtersFormSelect) => {
+    filtersFormSelect.disabled = isActive;
+  });
+  filtersFormFeatures.disabled = isActive;
+}
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -73,7 +90,7 @@ function createPinMarker (icon, isDraggable) {
         icon
       }
     );
-    pinMarker.addTo(advGroup);
+    //pinMarker.addTo(advGroup);
     return pinMarker;
   };
 }
@@ -82,6 +99,7 @@ const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
 
 function createPin (advData) {
   const pin = createOrdinaryPinMarker(advData.location.lat, advData.location.lng);
+  pin.addTo(advGroup);
   pin.bindPopup(generateCard(advData));
 }
 
@@ -99,4 +117,16 @@ mainPin.on('moveend', () => {
   setAddress(mainPin);
 });
 
-export {createPin};
+function resetCoordinates () {
+  mainPin.setLatLng(InitialPinCoordinates);
+  setAddress(mainPin);
+  map.setView(
+    {
+      lat: InitialMapCoordinates.lat,
+      lng: InitialMapCoordinates.lng
+    }, INITIAL_MAP_SCALE
+  );
+}
+
+
+export {createPin, createMainPinMarker, resetCoordinates};

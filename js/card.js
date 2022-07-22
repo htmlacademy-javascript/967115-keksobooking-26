@@ -66,7 +66,7 @@ function generateCard (cardData) { // Это данные для одной ка
 
   const popupPhotos = card.querySelector('.popup__photos');
   const photoTemplate = cardTemplate.querySelector('.popup__photo');
-  if (!Object.prototype.hasOwnProperty.call(cardData.offer, 'photos')){
+  if (!cardData.offer.photos){
     popupPhotos.classList.add('visually-hidden');
   } else {
     photosList(popupPhotos, cardData.offer.photos, photoTemplate);

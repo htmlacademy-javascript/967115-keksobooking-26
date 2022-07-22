@@ -1,11 +1,8 @@
 import {showAlert} from './alert.js';
-import {sendAdverisement} from './data.js';
+import {sendAdvertisement} from './data.js';
+import {resetForms} from './reset.js';
 
 const advertisementForm = document.querySelector('.ad-form');
-const advertisementFields = advertisementForm.querySelectorAll('fieldset');
-const filtersForm = document.querySelector('.map__filters');
-const filtersFormSelects = filtersForm.querySelectorAll('select'); // Может лучше через childNode собрать потомков первого уровня?
-const filtersFormFeatures = filtersForm.querySelector('fieldset'); //
 const roomsNumber = advertisementForm.querySelector('#room_number');
 const capacity = advertisementForm.querySelector('#capacity');
 
@@ -15,20 +12,6 @@ const guestsOptions = {
   '3': ['1', '2', '3'],
   '100': ['0']
 };
-
-// Блин, классное схлапывание. В копилку
-
-function toggleActiveMode (isActive) {
-  advertisementForm.classList.toggle('ad-form--disabled', isActive);
-  advertisementFields.forEach((advertisementField) => {
-    advertisementField.disabled = isActive;
-  });
-  filtersForm.classList.toggle('ad-form--disabled', isActive);
-  filtersFormSelects.forEach((filtersFormSelect) => {
-    filtersFormSelect.disabled = isActive;
-  });
-  filtersFormFeatures.disabled = isActive;
-}
 
 function guestsValidation () {
   return guestsOptions[roomsNumber.value].includes(capacity.value);
@@ -56,15 +39,22 @@ function formValidate () {
     evt.preventDefault();
     if (pristine.validate()) {
       const formData = new FormData(advertisementForm);
-      sendAdverisement(
+      sendAdvertisement(
         showAlert,
         showAlert,
-        formData,
-        advertisementForm
+        formData
       );
     }
 
   });
 }
 
-export {toggleActiveMode, formValidate};
+
+const resetButton = document.querySelector('.ad-form__reset');
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForms();
+});
+
+export {formValidate};
