@@ -1053,14 +1053,3 @@ fieldset {
 .hidden {
   display: none;
 }
-/* Custom */
-.form-error-container {
-  position: relative;
-}
-.form-error-message {
-  position: absolute;
-  color: red;
-  vertical-align: middle;
-  width: 300px;
-  margin-top: 30px;
-}

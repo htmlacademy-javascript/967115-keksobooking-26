@@ -56,8 +56,7 @@ function formValidate () {
 }
 
 function resetForms () {
-  const formElement = document.querySelector('.ad-form');
-  formElement.reset();
+  adFormElement.reset();
   resetSlider();
   resetCoordinates();
 }
