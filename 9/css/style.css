@@ -1059,4 +1059,8 @@ fieldset {
 }
 .form-error-message {
   position: absolute;
+  color: red;
+  vertical-align: middle;
+  width: 300px;
+  margin-top: 30px;
 }
