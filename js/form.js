@@ -1,6 +1,7 @@
-import {showAlert} from './alert.js';
+import {showSuccessAlert, showErrorAlert} from './alert.js';
 import {sendAdvertisement} from './data.js';
-import {resetForms} from './reset.js';
+import {resetCoordinates} from './map.js';
+import {resetSlider} from './slider.js';
 
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
@@ -23,8 +24,8 @@ function getGuestsErrorMessage () {
 }
 
 function showAlertResetForm (message) {
-  showAlert(message);
   resetForms();
+  showSuccessAlert(message);
 }
 
 function formValidate () {
@@ -45,14 +46,20 @@ function formValidate () {
     if (pristine.validate()) {
       const formData = new FormData(adFormElement);
       sendAdvertisement(
-        // showAlert,
         showAlertResetForm,
-        showAlert,
+        showErrorAlert,
         formData
       );
     }
 
   });
+}
+
+function resetForms () {
+  const formElement = document.querySelector('.ad-form');
+  formElement.reset();
+  resetSlider();
+  resetCoordinates();
 }
 
 const resetButtonElement = document.querySelector('.ad-form__reset');
