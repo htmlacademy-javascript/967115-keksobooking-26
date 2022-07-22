@@ -1,4 +1,3 @@
-import {toggleActiveMode} from './form.js';
 import {generateCard} from './card.js';
 
 const FLOAT_COORDINATES = 5;
@@ -18,7 +17,25 @@ const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
 const ORDINARI_ICON_URL = '../img/pin.svg';
 
-const address = document.querySelector('#address');
+const addressElement = document.querySelector('#address');
+
+const adFormElement = document.querySelector('.ad-form');
+const adFieldElements = adFormElement.querySelectorAll('fieldset');
+const filtersFormElement = document.querySelector('.map__filters');
+const filtersFormSelectsElements = filtersFormElement.querySelectorAll('select');
+const filtersFormFeaturesElement = filtersFormElement.querySelector('fieldset');
+
+function toggleActiveMode (isActive) {
+  adFormElement.classList.toggle('ad-form--disabled', isActive);
+  adFieldElements.forEach((advertisementField) => {
+    advertisementField.disabled = isActive;
+  });
+  filtersFormElement.classList.toggle('ad-form--disabled', isActive);
+  filtersFormSelectsElements.forEach((filtersFormSelect) => {
+    filtersFormSelect.disabled = isActive;
+  });
+  filtersFormFeaturesElement.disabled = isActive;
+}
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -73,7 +90,7 @@ function createPinMarker (icon, isDraggable) {
         icon
       }
     );
-    pinMarker.addTo(advGroup);
+    //pinMarker.addTo(advGroup);
     return pinMarker;
   };
 }
@@ -82,6 +99,7 @@ const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
 
 function createPin (advData) {
   const pin = createOrdinaryPinMarker(advData.location.lat, advData.location.lng);
+  pin.addTo(advGroup);
   pin.bindPopup(generateCard(advData));
 }
 
@@ -91,7 +109,7 @@ mainPin.addTo(advGroup);
 function setAddress (point) {
   const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
   const lng = point.getLatLng().lng.toFixed(FLOAT_COORDINATES);
-  address.value = `${lat}, ${lng}`;
+  addressElement.value = `${lat}, ${lng}`;
 }
 setAddress(mainPin);
 
@@ -99,4 +117,16 @@ mainPin.on('moveend', () => {
   setAddress(mainPin);
 });
 
-export {createPin};
+function resetCoordinates () {
+  mainPin.setLatLng(InitialPinCoordinates);
+  setAddress(mainPin);
+  map.setView(
+    {
+      lat: InitialMapCoordinates.lat,
+      lng: InitialMapCoordinates.lng
+    }, INITIAL_MAP_SCALE
+  );
+}
+
+
+export {createPin, createMainPinMarker, resetCoordinates};
