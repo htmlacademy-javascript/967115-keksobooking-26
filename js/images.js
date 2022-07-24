@@ -1,3 +1,4 @@
+//Для отличия от 12.1
 const FILE_TYPES = ['png', 'jpg', 'jpeg'];
 
 const avatarPreviewElement = document.querySelector('.ad-form-header__preview img');
