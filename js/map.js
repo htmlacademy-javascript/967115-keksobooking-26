@@ -16,7 +16,7 @@ const MAIN_ICON_SIZE_Y = 52;
 const MAIN_ICON_URL = '../img/main-pin.svg';
 const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
-const ORDINARI_ICON_URL = '../img/pin.svg';
+const ORDINARY_ICON_URL = '../img/pin.svg';
 
 const SIMILAR_ADS_NUMBER = 10;
 
@@ -76,7 +76,7 @@ const mainPinCoordinates = {
 
 const ordinaryPinIcon = L.icon(
   {
-    iconUrl: ORDINARI_ICON_URL,
+    iconUrl: ORDINARY_ICON_URL,
     iconSize: [ORDINARY_ICON_SIZE_X, ORDINARY_ICON_SIZE_Y],
     iconAnchor: [ORDINARY_ICON_SIZE_X / 2, ORDINARY_ICON_SIZE_Y]
   }

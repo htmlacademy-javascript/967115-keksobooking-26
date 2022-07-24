@@ -6,6 +6,7 @@ import {getAdvertisements} from './data.js';
 import './alert.js';
 import {showSuccessAlert} from './alert.js';
 import './filter.js';
+import './images.js';
 
 formValidate();
 
