@@ -1,4 +1,5 @@
 import {generateCard} from './card.js';
+import {compareAds} from './filter.js';
 
 const FLOAT_COORDINATES = 5;
 const InitialMapCoordinates = {
@@ -15,7 +16,9 @@ const MAIN_ICON_SIZE_Y = 52;
 const MAIN_ICON_URL = '../img/main-pin.svg';
 const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
-const ORDINARI_ICON_URL = '../img/pin.svg';
+const ORDINARY_ICON_URL = '../img/pin.svg';
+
+const SIMILAR_ADS_NUMBER = 10;
 
 const addressElement = document.querySelector('#address');
 
@@ -56,6 +59,7 @@ L.tileLayer(
 ).addTo(map);
 
 const advGroup = L.layerGroup().addTo(map);
+const mainPinGroup = L.layerGroup().addTo(map);
 
 const mainPinIcon = L.icon(
   {
@@ -72,7 +76,7 @@ const mainPinCoordinates = {
 
 const ordinaryPinIcon = L.icon(
   {
-    iconUrl: ORDINARI_ICON_URL,
+    iconUrl: ORDINARY_ICON_URL,
     iconSize: [ORDINARY_ICON_SIZE_X, ORDINARY_ICON_SIZE_Y],
     iconAnchor: [ORDINARY_ICON_SIZE_X / 2, ORDINARY_ICON_SIZE_Y]
   }
@@ -90,21 +94,24 @@ function createPinMarker (icon, isDraggable) {
         icon
       }
     );
-    //pinMarker.addTo(advGroup);
     return pinMarker;
   };
 }
 const createMainPinMarker = createPinMarker(mainPinIcon, true);
 const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
 
-function createPin (advData) {
-  const pin = createOrdinaryPinMarker(advData.location.lat, advData.location.lng);
-  pin.addTo(advGroup);
-  pin.bindPopup(generateCard(advData));
+function createPins (ads) {
+  advGroup.clearLayers();
+  const filteredAds = ads.filter(compareAds);
+  filteredAds.slice(0, SIMILAR_ADS_NUMBER).forEach((ad) => {
+    const pin = createOrdinaryPinMarker(ad.location.lat, ad.location.lng);
+    pin.addTo(advGroup);
+    pin.bindPopup(generateCard(ad));
+  });
 }
 
 const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
-mainPin.addTo(advGroup);
+mainPin.addTo(mainPinGroup);
 
 function setAddress (point) {
   const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
@@ -129,4 +136,4 @@ function resetCoordinates () {
 }
 
 
-export {createPin, createMainPinMarker, resetCoordinates};
+export {createPins, createMainPinMarker, resetCoordinates};

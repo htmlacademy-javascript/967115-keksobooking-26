@@ -2,10 +2,18 @@ import {showSuccessAlert, showErrorAlert} from './alert.js';
 import {sendAdvertisement} from './data.js';
 import {resetCoordinates} from './map.js';
 import {resetSlider} from './slider.js';
+import {debounce} from './util.js';
+
+const PIN_DELAY = 500;
 
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
 const capacityElement = adFormElement.querySelector('#capacity');
+const housingTypeFilterElement = document.querySelector('#housing-type');
+const housingPriceFilterElement = document.querySelector('#housing-price');
+const housingRoomsFilterElement = document.querySelector('#housing-rooms');
+const housingGuestsFilterElement = document.querySelector('#housing-guests');
+const housingFeaturesFilterElement = document.querySelector('#housing-features');
 
 const guestsOptions = {
   '1': ['1'],
@@ -68,4 +76,14 @@ resetButtonElement.addEventListener('click', (evt) => {
   resetForms();
 });
 
-export {formValidate};
+
+function setFilters (cb) {
+  housingTypeFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingPriceFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingRoomsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingGuestsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingFeaturesFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+}
+
+
+export {formValidate, setFilters};
