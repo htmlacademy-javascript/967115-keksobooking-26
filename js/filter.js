@@ -50,6 +50,10 @@ function compareHousinGuests (ad) {
 }
 
 function compareHousingFeatures (ad) {
+  //Чтобы lint не ругался, удалить
+  let flag;
+  if(ad) {flag = true;}
+
   // let flag = true;
   // housingFeaturesFilterElements.forEach((feature) => {
   //     if (feature.checked) {
@@ -58,7 +62,7 @@ function compareHousingFeatures (ad) {
   //     }
   // });
   // return flag;
-  return true;
+  return flag;
 }
 
 
