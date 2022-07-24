@@ -6,6 +6,10 @@ import {resetSlider} from './slider.js';
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
 const capacityElement = adFormElement.querySelector('#capacity');
+const housingTypeFilterElement = document.querySelector('#housing-type');
+const housingPriceFilterElement = document.querySelector('#housing-price');
+const housingRoomsFilterElement = document.querySelector('#housing-rooms');
+const housingGuestsFilterElement = document.querySelector('#housing-guests');
 
 const guestsOptions = {
   '1': ['1'],
@@ -68,4 +72,13 @@ resetButtonElement.addEventListener('click', (evt) => {
   resetForms();
 });
 
-export {formValidate};
+
+function setFilters (cb) {
+  housingTypeFilterElement.addEventListener('change', () => cb());
+  housingPriceFilterElement.addEventListener('change', () => cb());
+  housingRoomsFilterElement.addEventListener('change', () => cb());
+  housingGuestsFilterElement.addEventListener('change', () => cb());
+}
+
+
+export {formValidate, setFilters};
