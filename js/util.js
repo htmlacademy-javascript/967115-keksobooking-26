@@ -38,10 +38,19 @@ function getSubList (listTemplate, list) {
   });
 }
 
+const debounce = (cb, timeoutDelay) => {
+  let timeoutID;
+  return (...rest) => {
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => cb.apply(this, rest), timeoutDelay);
+  };
+};
+
 export {
   getRandomPositiveInteger,
   getRandomPositiveFloat,
   getRandomArrayElement,
   getRandomSubArray,
-  getSubList
+  getSubList,
+  debounce
 };
