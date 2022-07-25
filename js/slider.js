@@ -26,9 +26,19 @@ noUiSlider.create(sliderElement, {
   }
 });
 
+function updateMinOption (minValue) {
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      min: minValue,
+      max: INITIAL_SLIDER_MAX_VALUE
+    }
+  });
+}
+
 sliderElement.noUiSlider.on('update', (value) => {
   priceElement.value = value;
 });
+
 
 priceElement.addEventListener('input', () => {
   sliderElement.noUiSlider.set(priceElement.value);
@@ -38,4 +48,4 @@ function resetSlider () {
   sliderElement.noUiSlider.set(INITIAL_SLIDER_START_VALUE);
 }
 
-export {resetSlider};
+export {resetSlider, updateMinOption};

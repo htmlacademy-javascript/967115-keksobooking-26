@@ -1,14 +1,26 @@
 import {showSuccessAlert, showErrorAlert} from './alert.js';
 import {sendAdvertisement} from './data.js';
 import {resetCoordinates} from './map.js';
-import {resetSlider} from './slider.js';
+import {resetSlider, updateMinOption} from './slider.js';
 import {debounce} from './util.js';
 
 const PIN_DELAY = 500;
+const MIN_PRICE = {
+  'flat': 1000,
+  'bungalow': 0,
+  'house': 5000,
+  'palace': 10000,
+  'hotel': 3000
+};
+
 
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
 const capacityElement = adFormElement.querySelector('#capacity');
+const timeinElement = adFormElement.querySelector('#timein');
+const timeoutElement = adFormElement.querySelector('#timeout');
+const typeElement = adFormElement.querySelector('#type');
+const priceElement = adFormElement.querySelector('#price');
 const housingTypeFilterElement = document.querySelector('#housing-type');
 const housingPriceFilterElement = document.querySelector('#housing-price');
 const housingRoomsFilterElement = document.querySelector('#housing-rooms');
@@ -70,12 +82,27 @@ function resetForms () {
 }
 
 const resetButtonElement = document.querySelector('.ad-form__reset');
-
 resetButtonElement.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForms();
 });
 
+timeinElement.addEventListener('change', () => {
+  timeoutElement.value = timeinElement.value;
+});
+
+timeoutElement.addEventListener('change', () => {
+  timeinElement.value = timeoutElement.value;
+});
+
+updateMinOption(MIN_PRICE[typeElement.value]);
+typeElement.addEventListener('change', () => {
+  const customerPrice = priceElement.value;
+  updateMinOption(MIN_PRICE[typeElement.value]);
+  priceElement.value = customerPrice;
+  priceElement.min = MIN_PRICE[typeElement.value];
+  typeElement.placeholder = MIN_PRICE[typeElement.value];
+});
 
 function setFilters (cb) {
   housingTypeFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
