@@ -21,6 +21,7 @@ const timeinElement = adFormElement.querySelector('#timein');
 const timeoutElement = adFormElement.querySelector('#timeout');
 const typeElement = adFormElement.querySelector('#type');
 const priceElement = adFormElement.querySelector('#price');
+const mapFiltersFormElement = document.querySelector('.map__filters');
 const housingTypeFilterElement = document.querySelector('#housing-type');
 const housingPriceFilterElement = document.querySelector('#housing-price');
 const housingRoomsFilterElement = document.querySelector('#housing-rooms');
@@ -43,10 +44,6 @@ function getGuestsErrorMessage () {
     'Добавьте комнат или уменьшите количество гостей';
 }
 
-function showAlertResetForm (message) {
-  resetForms();
-  showSuccessAlert(message);
-}
 
 function formValidate () {
   const pristine = new Pristine(adFormElement, {
@@ -66,7 +63,7 @@ function formValidate () {
     if (pristine.validate()) {
       const formData = new FormData(adFormElement);
       sendAdvertisement(
-        showAlertResetForm,
+        showSuccessAlert,
         showErrorAlert,
         formData
       );
@@ -77,15 +74,12 @@ function formValidate () {
 
 function resetForms () {
   adFormElement.reset();
+  mapFiltersFormElement.reset();
   resetSlider();
   resetCoordinates();
 }
 
 const resetButtonElement = document.querySelector('.ad-form__reset');
-resetButtonElement.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetForms();
-});
 
 timeinElement.addEventListener('change', () => {
   timeoutElement.value = timeinElement.value;
@@ -112,5 +106,19 @@ function setFilters (cb) {
   housingFeaturesFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
 }
 
+function setInitialMapAndForms (cb) {
+  resetButtonElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForms();
+    cb();
+  });
+  adFormElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    resetForms();
+    cb();
+  });
 
-export {formValidate, setFilters};
+}
+
+
+export {formValidate, setFilters, setInitialMapAndForms};
