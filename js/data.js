@@ -9,7 +9,7 @@ const getAdvertisements = (onSuccess, onFail) => {
 
 const sendAdvertisement = (onSuccess, onFail, data) => {
   fetch(
-    'https://26.javascript.pages.academy/keksobooking2',
+    'https://26.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
       body: data,

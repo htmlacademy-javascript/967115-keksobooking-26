@@ -15,6 +15,17 @@ bodyElement.appendChild(successAlertElement);
 
 const isEscKey = (evt) => evt.key === 'Escape';
 
+const onErrorAlertClick = () => {
+  closeErrorAlert();
+};
+
+const onErrorEscKeydown = (evt) => {
+  if (isEscKey) {
+    evt.preventDefault();
+    closeErrorAlert();
+  }
+};
+
 const showErrorAlert = (message) => {
   errorAlertElement.querySelector('.error__message').textContent = message;
   errorAlertElement.classList.remove('visually-hidden');
@@ -23,22 +34,22 @@ const showErrorAlert = (message) => {
 
 };
 
-function onErrorAlertClick () {
-  closeErrorAlert();
-}
-
-function onErrorEscKeydown (evt) {
-  if (isEscKey) {
-    evt.preventDefault();
-    closeErrorAlert();
-  }
-}
-
 function closeErrorAlert () {
   errorAlertElement.classList.add('visually-hidden');
   document.removeEventListener('click', onErrorAlertClick);
   document.removeEventListener('keydown', onErrorEscKeydown);
 }
+
+const onSuccessAlertClick = () => {
+  closeSuccessAlert();
+};
+
+const onSuccessEscKeydown = (evt) => {
+  if (isEscKey) {
+    evt.preventDefault();
+    closeSuccessAlert();
+  }
+};
 
 const showSuccessAlert = (message) => {
   successAlertElement.querySelector('.success__message').textContent = message;
@@ -46,17 +57,6 @@ const showSuccessAlert = (message) => {
   document.addEventListener('click', onSuccessAlertClick);
   document.addEventListener('keydown', onSuccessEscKeydown);
 };
-
-function onSuccessAlertClick () {
-  closeSuccessAlert();
-}
-
-function onSuccessEscKeydown (evt) {
-  if (isEscKey) {
-    evt.preventDefault();
-    closeSuccessAlert();
-  }
-}
 
 function closeSuccessAlert () {
   successAlertElement.classList.add('visually-hidden');

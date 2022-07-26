@@ -96,6 +96,8 @@ const createPinMarker = (icon, isDraggable) =>
 
 const createMainPinMarker = createPinMarker(mainPinIcon, true);
 const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
+const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
+mainPin.addTo(mainPinGroup);
 
 const createPins = (ads) => {
   advGroup.clearLayers();
@@ -107,19 +109,11 @@ const createPins = (ads) => {
   });
 };
 
-const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
-mainPin.addTo(mainPinGroup);
-
 const setAddress = (point) => {
   const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
   const lng = point.getLatLng().lng.toFixed(FLOAT_COORDINATES);
   addressElement.value = `${lat}, ${lng}`;
 };
-setAddress(mainPin);
-
-mainPin.on('moveend', () => {
-  setAddress(mainPin);
-});
 
 const resetCoordinates = () => {
   mainPin.setLatLng(InitialPinCoordinates);
@@ -131,6 +125,12 @@ const resetCoordinates = () => {
     }, INITIAL_MAP_SCALE
   );
 };
+
+setAddress(mainPin);
+
+mainPin.on('moveend', () => {
+  setAddress(mainPin);
+});
 
 
 export {createPins, createMainPinMarker, resetCoordinates};
