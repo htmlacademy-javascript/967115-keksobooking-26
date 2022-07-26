@@ -35,7 +35,7 @@ const guestsOptions = {
   '100': ['0']
 };
 
-function guestsValidation () {
+function validateGuests () {
   return guestsOptions[roomsNumberElement.value].includes(capacityElement.value);
 }
 function getGuestsErrorMessage () {
@@ -55,8 +55,8 @@ function formValidate () {
     errorTextClass: 'form__error'
   });
 
-  pristine.addValidator(roomsNumberElement, guestsValidation, getGuestsErrorMessage);
-  pristine.addValidator(capacityElement, guestsValidation, getGuestsErrorMessage);
+  pristine.addValidator(roomsNumberElement, validateGuests, getGuestsErrorMessage);
+  pristine.addValidator(capacityElement, validateGuests, getGuestsErrorMessage);
 
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -72,12 +72,12 @@ function formValidate () {
   });
 }
 
-function resetForms () {
+const resetForms = () => {
   adFormElement.reset();
   mapFiltersFormElement.reset();
   resetSlider();
   resetCoordinates();
-}
+};
 
 const resetButtonElement = document.querySelector('.ad-form__reset');
 
@@ -98,15 +98,15 @@ typeElement.addEventListener('change', () => {
   typeElement.placeholder = MIN_PRICE[typeElement.value];
 });
 
-function setFilters (cb) {
+const setFilters = (cb) => {
   housingTypeFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
   housingPriceFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
   housingRoomsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
   housingGuestsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
   housingFeaturesFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-}
+};
 
-function setInitialMapAndForms (cb) {
+const setInitialMapAndForms = (cb) => {
   resetButtonElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     resetForms();
@@ -118,7 +118,7 @@ function setInitialMapAndForms (cb) {
     cb();
   });
 
-}
+};
 
 
 export {formValidate, setFilters, setInitialMapAndForms};
