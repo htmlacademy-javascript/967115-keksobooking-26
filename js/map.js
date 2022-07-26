@@ -28,7 +28,7 @@ const filtersFormElement = document.querySelector('.map__filters');
 const filtersFormSelectsElements = filtersFormElement.querySelectorAll('select');
 const filtersFormFeaturesElement = filtersFormElement.querySelector('fieldset');
 
-function toggleActiveMode (isActive) {
+const toggleActiveMode = (isActive) => {
   adFormElement.classList.toggle('ad-form--disabled', isActive);
   adFieldElements.forEach((advertisementField) => {
     advertisementField.disabled = isActive;
@@ -38,7 +38,7 @@ function toggleActiveMode (isActive) {
     filtersFormSelect.disabled = isActive;
   });
   filtersFormFeaturesElement.disabled = isActive;
-}
+};
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -82,8 +82,8 @@ const ordinaryPinIcon = L.icon(
   }
 );
 
-function createPinMarker (icon, isDraggable) {
-  return function (lat, lng) {
+const createPinMarker = (icon, isDraggable) =>
+  (lat, lng) => {
     const pinMarker = L.marker(
       {
         lat,
@@ -96,11 +96,10 @@ function createPinMarker (icon, isDraggable) {
     );
     return pinMarker;
   };
-}
 const createMainPinMarker = createPinMarker(mainPinIcon, true);
 const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
 
-function createPins (ads) {
+const createPins = (ads) => {
   advGroup.clearLayers();
   const filteredAds = ads.filter(compareAds);
   filteredAds.slice(0, SIMILAR_ADS_NUMBER).forEach((ad) => {
@@ -108,23 +107,23 @@ function createPins (ads) {
     pin.addTo(advGroup);
     pin.bindPopup(generateCard(ad));
   });
-}
+};
 
 const mainPin = createMainPinMarker(mainPinCoordinates.lat, mainPinCoordinates.lng);
 mainPin.addTo(mainPinGroup);
 
-function setAddress (point) {
+const setAddress = (point) => {
   const lat = point.getLatLng().lat.toFixed(FLOAT_COORDINATES);
   const lng = point.getLatLng().lng.toFixed(FLOAT_COORDINATES);
   addressElement.value = `${lat}, ${lng}`;
-}
+};
 setAddress(mainPin);
 
 mainPin.on('moveend', () => {
   setAddress(mainPin);
 });
 
-function resetCoordinates () {
+const resetCoordinates = () => {
   mainPin.setLatLng(InitialPinCoordinates);
   setAddress(mainPin);
   map.setView(
@@ -133,7 +132,7 @@ function resetCoordinates () {
       lng: InitialMapCoordinates.lng
     }, INITIAL_MAP_SCALE
   );
-}
+};
 
 
 export {createPins, createMainPinMarker, resetCoordinates};

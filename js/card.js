@@ -9,15 +9,15 @@ const HOUSING_TYPE = {
 };
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-function emptynessCheck (data, field) {
+const emptynessCheck = (data, field) => {
   if (data) {
     field.textContent = data;
   } else {
     field.classList.add('visually-hidden');
   }
-}
+};
 
-function photosList (photosContainer, photos, photoTemplate) {
+const photosList = (photosContainer, photos, photoTemplate) => {
   photosContainer.innerHTML = '';
   photos.forEach((photo) => {
     const photoItem = photoTemplate.cloneNode(true);
@@ -25,9 +25,9 @@ function photosList (photosContainer, photos, photoTemplate) {
     photosContainer.appendChild(photoItem);
   });
   if (!photos) {photosContainer.classList.add('visually-hidden');}
-}
+};
 
-function generateCard (cardData) { // Это данные для одной карточки
+const generateCard = (cardData) => {
   const card = cardTemplate.cloneNode(true);
 
   const popupTitleElement = card.querySelector('.popup__title');
@@ -70,12 +70,11 @@ function generateCard (cardData) { // Это данные для одной ка
   } else {
     photosList(popupPhotosElement, cardData.offer.photos, photoTemplate);
   }
-  //!cardData.offer.hasOwnProperty('photos')
 
   const popupAvatarElement = card.querySelector('.popup__avatar');
   popupAvatarElement.src = cardData.author.avatar;
 
   return card;
-}
+};
 
 export {generateCard};

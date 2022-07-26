@@ -17,23 +17,20 @@ noUiSlider.create(sliderElement, {
   step: INITIAL_SLIDER_STEP,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(FLOAT_PRICE);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    }
+    to: (value) => value.toFixed(FLOAT_PRICE),
+    from: (value) => parseFloat(value)
   }
-});
+}
+);
 
-function updateMinOption (minValue) {
+const updateMinOption = (minValue) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: minValue,
       max: INITIAL_SLIDER_MAX_VALUE
     }
   });
-}
+};
 
 sliderElement.noUiSlider.on('update', (value) => {
   priceElement.value = value;
@@ -44,8 +41,8 @@ priceElement.addEventListener('input', () => {
   sliderElement.noUiSlider.set(priceElement.value);
 });
 
-function resetSlider () {
+const resetSlider = () => {
   sliderElement.noUiSlider.set(INITIAL_SLIDER_START_VALUE);
-}
+};
 
 export {resetSlider, updateMinOption};
