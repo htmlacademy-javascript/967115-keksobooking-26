@@ -13,7 +13,6 @@ const MIN_PRICE = {
   'hotel': 3000
 };
 
-
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
 const capacityElement = adFormElement.querySelector('#capacity');
@@ -27,6 +26,7 @@ const housingPriceFilterElement = document.querySelector('#housing-price');
 const housingRoomsFilterElement = document.querySelector('#housing-rooms');
 const housingGuestsFilterElement = document.querySelector('#housing-guests');
 const housingFeaturesFilterElement = document.querySelector('#housing-features');
+const resetButtonElement = document.querySelector('.ad-form__reset');
 
 const guestsOptions = {
   '1': ['1'],
@@ -35,17 +35,40 @@ const guestsOptions = {
   '100': ['0']
 };
 
-function validateGuests () {
-  return guestsOptions[roomsNumberElement.value].includes(capacityElement.value);
-}
-function getGuestsErrorMessage () {
-  return (roomsNumberElement.value === '100' || capacityElement.value === '0') ?
-    'Большие помещения не созданы для гостей. И наоборот...' :
-    'Добавьте комнат или уменьшите количество гостей';
-}
+const validateGuests = () => guestsOptions[roomsNumberElement.value].includes(capacityElement.value);
+
+const getGuestsErrorMessage = () => (roomsNumberElement.value === '100' || capacityElement.value === '0') ?
+  'Большие помещения не созданы для гостей. И наоборот...' :
+  'Добавьте комнат или уменьшите количество гостей';
+
+const resetForms = () => {
+  adFormElement.reset();
+  mapFiltersFormElement.reset();
+  resetSlider();
+  resetCoordinates();
+};
 
 
-function formValidate () {
+const setFilters = (cb) => {
+  housingTypeFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingPriceFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingRoomsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingGuestsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+  housingFeaturesFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
+};
+
+const resetSuccessForm = (message) => {
+  resetForms();
+  showSuccessAlert(message);
+};
+
+const setInitialMapAndForms = (cb) => {
+  resetButtonElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForms();
+    cb();
+  });
+
   const pristine = new Pristine(adFormElement, {
     classTo: 'form__item',
     errorClass: 'form__item--invalid',
@@ -63,23 +86,14 @@ function formValidate () {
     if (pristine.validate()) {
       const formData = new FormData(adFormElement);
       sendAdvertisement(
-        showSuccessAlert,
+        resetSuccessForm,
         showErrorAlert,
         formData
       );
     }
 
   });
-}
-
-const resetForms = () => {
-  adFormElement.reset();
-  mapFiltersFormElement.reset();
-  resetSlider();
-  resetCoordinates();
 };
-
-const resetButtonElement = document.querySelector('.ad-form__reset');
 
 timeinElement.addEventListener('change', () => {
   timeoutElement.value = timeinElement.value;
@@ -98,27 +112,4 @@ typeElement.addEventListener('change', () => {
   typeElement.placeholder = MIN_PRICE[typeElement.value];
 });
 
-const setFilters = (cb) => {
-  housingTypeFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-  housingPriceFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-  housingRoomsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-  housingGuestsFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-  housingFeaturesFilterElement.addEventListener('change', debounce(() => cb(), PIN_DELAY));
-};
-
-const setInitialMapAndForms = (cb) => {
-  resetButtonElement.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    resetForms();
-    cb();
-  });
-  adFormElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    resetForms();
-    cb();
-  });
-
-};
-
-
-export {formValidate, setFilters, setInitialMapAndForms};
+export {setFilters, setInitialMapAndForms};

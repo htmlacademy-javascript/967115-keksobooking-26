@@ -32,17 +32,16 @@ const updateMinOption = (minValue) => {
   });
 };
 
-sliderElement.noUiSlider.on('update', (value) => {
-  priceElement.value = value;
-});
-
+const resetSlider = () => {
+  sliderElement.noUiSlider.set(INITIAL_SLIDER_START_VALUE);
+};
 
 priceElement.addEventListener('input', () => {
   sliderElement.noUiSlider.set(priceElement.value);
 });
 
-const resetSlider = () => {
-  sliderElement.noUiSlider.set(INITIAL_SLIDER_START_VALUE);
-};
+sliderElement.noUiSlider.on('update', (value) => {
+  priceElement.value = value;
+});
 
 export {resetSlider, updateMinOption};

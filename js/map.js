@@ -17,16 +17,15 @@ const MAIN_ICON_URL = '../img/main-pin.svg';
 const ORDINARY_ICON_SIZE_X = 40;
 const ORDINARY_ICON_SIZE_Y = 40;
 const ORDINARY_ICON_URL = '../img/pin.svg';
-
 const SIMILAR_ADS_NUMBER = 10;
 
 const addressElement = document.querySelector('#address');
-
 const adFormElement = document.querySelector('.ad-form');
 const adFieldElements = adFormElement.querySelectorAll('fieldset');
 const filtersFormElement = document.querySelector('.map__filters');
 const filtersFormSelectsElements = filtersFormElement.querySelectorAll('select');
 const filtersFormFeaturesElement = filtersFormElement.querySelector('fieldset');
+
 
 const toggleActiveMode = (isActive) => {
   adFormElement.classList.toggle('ad-form--disabled', isActive);
@@ -83,8 +82,8 @@ const ordinaryPinIcon = L.icon(
 );
 
 const createPinMarker = (icon, isDraggable) =>
-  (lat, lng) => {
-    const pinMarker = L.marker(
+  (lat, lng) =>
+    L.marker(
       {
         lat,
         lng
@@ -94,8 +93,7 @@ const createPinMarker = (icon, isDraggable) =>
         icon
       }
     );
-    return pinMarker;
-  };
+
 const createMainPinMarker = createPinMarker(mainPinIcon, true);
 const createOrdinaryPinMarker = createPinMarker(ordinaryPinIcon, false);
 
