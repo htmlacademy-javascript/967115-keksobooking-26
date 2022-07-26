@@ -1,26 +1,27 @@
 const bodyElement = document.querySelector('body');
-
-const isEscKey = (evt) => evt.key === 'Escape';
-
-//Строим окно с ошибкой
 const errorAlertTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
 const errorAlertElement = errorAlertTemplate.cloneNode(true);
 const errorButtonElement = errorAlertElement.querySelector('.error__button');
+const successAlertTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const successAlertElement = successAlertTemplate.cloneNode(true);
 errorAlertElement.classList.add('visually-hidden');
 bodyElement.appendChild(errorAlertElement);
+successAlertElement.classList.add('visually-hidden');
+bodyElement.appendChild(successAlertElement);
+
+const isEscKey = (evt) => evt.key === 'Escape';
 
 const showErrorAlert = (message) => {
   errorAlertElement.querySelector('.error__message').textContent = message;
   errorAlertElement.classList.remove('visually-hidden');
   document.addEventListener('click', onErrorAlertClick);
   document.addEventListener('keydown', onErrorEscKeydown);
-};
 
-errorButtonElement.addEventListener('click', () => {
-  closeErrorAlert();
-});
+};
 
 function onErrorAlertClick () {
   closeErrorAlert();
@@ -38,14 +39,6 @@ function closeErrorAlert () {
   document.removeEventListener('click', onErrorAlertClick);
   document.removeEventListener('keydown', onErrorEscKeydown);
 }
-
-//Строим окно с успехом
-const successAlertTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-const successAlertElement = successAlertTemplate.cloneNode(true);
-successAlertElement.classList.add('visually-hidden');
-bodyElement.appendChild(successAlertElement);
 
 const showSuccessAlert = (message) => {
   successAlertElement.querySelector('.success__message').textContent = message;
@@ -71,5 +64,8 @@ function closeSuccessAlert () {
   document.removeEventListener('keydown', onSuccessEscKeydown);
 }
 
+errorButtonElement.addEventListener('click', () => {
+  closeErrorAlert();
+});
 
 export {showSuccessAlert, showErrorAlert};

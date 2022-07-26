@@ -7,9 +7,10 @@ const HOUSING_TYPE = {
   'palace': 'Дворец',
   'hotel': 'Отель'
 };
+
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const emptynessCheck = (data, field) => {
+const emptinessCheck = (data, field) => {
   if (data) {
     field.textContent = data;
   } else {
@@ -31,17 +32,17 @@ const generateCard = (cardData) => {
   const card = cardTemplate.cloneNode(true);
 
   const popupTitleElement = card.querySelector('.popup__title');
-  emptynessCheck(cardData.offer.title, popupTitleElement);
+  emptinessCheck(cardData.offer.title, popupTitleElement);
 
   const popupAddressElement = card.querySelector('.popup__text--address');
-  emptynessCheck(cardData.offer.address, popupAddressElement);
+  emptinessCheck(cardData.offer.address, popupAddressElement);
 
   const popupPriceElement = card.querySelector('.popup__text--price');
-  emptynessCheck(cardData.offer.price, popupPriceElement);
+  emptinessCheck(cardData.offer.price, popupPriceElement);
   popupPriceElement.textContent += ' ₽/ночь';
 
   const popupTypeElement = card.querySelector('.popup__type');
-  emptynessCheck(HOUSING_TYPE[cardData.offer.type], popupTypeElement);
+  emptinessCheck(HOUSING_TYPE[cardData.offer.type], popupTypeElement);
 
   const popupCapacityElement = card.querySelector('.popup__text--capacity');
   popupCapacityElement.textContent = `${cardData.offer.rooms} комнат для ${cardData.offer.guests} гостей `;
