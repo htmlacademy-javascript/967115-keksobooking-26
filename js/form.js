@@ -12,6 +12,8 @@ const MIN_PRICE = {
   'palace': 10000,
   'hotel': 3000
 };
+const NO_GUESTS_CAPACITY = '0';
+const NO_GUESTS_ROOMS = '100';
 
 const adFormElement = document.querySelector('.ad-form');
 const roomsNumberElement = adFormElement.querySelector('#room_number');
@@ -37,7 +39,7 @@ const guestsOptions = {
 
 const validateGuests = () => guestsOptions[roomsNumberElement.value].includes(capacityElement.value);
 
-const getGuestsErrorMessage = () => (roomsNumberElement.value === '100' || capacityElement.value === '0') ?
+const getGuestsErrorMessage = () => (roomsNumberElement.value === NO_GUESTS_ROOMS || capacityElement.value === NO_GUESTS_CAPACITY) ?
   'Большие помещения не созданы для гостей. И наоборот...' :
   'Добавьте комнат или уменьшите количество гостей';
 
